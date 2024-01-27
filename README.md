@@ -1,1 +1,12 @@
-Test
+# Assignment-Audio-Player-with-Load-Balancer
+
+This application is a local client-server audio player that has the ability to balance the load of multiple clients/threads between multiple servers. The module that required it regarded distributed systems and their ability to run smoothly by utilizing various programming techniques and technologies in general.
+
+The program's basic layout was given to us beforehand (the application could already connect clients/threads with servers) and we were tasked to create an audio playback and streaming service, build a load balancer (LB) of our choice and add user registration, logging in and authentication functionality. It was written using the Apache NetBeans 15 IDE (https://netbeans.apache.org/front/main/).
+
+I initially designed a dynamic least connection LB (assigned clients to the server currently serving the least of them), that was working normally until I added code to substract the number of active clients, when one disconnects. I could not fix the thread synchronization problem and so I stopped working on it and instead implemented a simple, weighted round robin load balancing algorithm (assigns clients to one server based on its abilities/weight and then moves on to the next one, according to a fixed sequence). I have kept the old LB's code as well as the problem's description as comments.
+
+After building the project, you have to run 3 different files/classes, to use the program. You first run the load balancer/bootstrap node (LoadBalancerInit.java) once, then the server node (AudioServerInit.java) three times, creating 3 audio servers, and lastly any number of client nodes you
+want to (ClientInitialization.java). The 3 servers' port number has been hard-coded, so they must run on ports 5001, 5002 and 5003.
+
+The program's use is pretty straightforward: You either create an account (I can't say I'm proud of my work here, this was not the assignment's focus anyway), whose credentials are permanently saved in a .txt file, or just log in. After the program authenticates you, you are provided with a list of the available songs and can choose one to listen to by typing its number. You can also pause, resume and stop its playback and of course select a different one to listen to. The only flaw is that the first time you pause a song, it next resumes at an instance very slightly ahead from where you paused it (I don't know why this happens).
